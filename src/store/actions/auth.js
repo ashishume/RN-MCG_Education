@@ -2,7 +2,7 @@ import * as ActionType from './ActionTypes';
 import HttpService from '../../API/HttpService';
 import {API_NAME} from '../../API/ApiPaths';
 import {ToastAndroid} from 'react-native';
-// import {AsyncStorage} from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const login = values => async dispatch => {
   try {
@@ -11,18 +11,17 @@ export const login = values => async dispatch => {
       type: ActionType.LOGIN,
       payload: response.data,
     });
-    // AsyncStorage.setItem('email', response.data.email);
+    setLoginStatus(response.data.email);
   } catch (err) {
     ToastAndroid.show('Login Failed', ToastAndroid.SHORT);
   }
 };
-// export const fetchContent = postId => async dispatch => {
-//   const response = await HttpService.get(
-//     `${API_NAME.FETCH_POSTS}/${postId}?key=${API_KEY}`,
-//   );
 
-//   dispatch({
-//     type: ActionType.FETCH_POST,
-//     payload: response.data,
-//   });
-// };
+const setLoginStatus = async value => {
+  try {
+    await AsyncStorage.setItem('email', value);
+  } catch (e) {
+    ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+  }
+};
+

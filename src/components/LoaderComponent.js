@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import http from '../API/HttpService';
 import {loading} from '../store/actions/loader';
 import {connect} from 'react-redux';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, View, StyleSheet} from 'react-native';
 
 class LoaderComponent extends Component {
   componentDidMount() {
@@ -32,7 +32,13 @@ class LoaderComponent extends Component {
   }
   render() {
     return (
-      <Fragment>{this.props.loader ? <ActivityIndicator /> : null}</Fragment>
+      <Fragment>
+        {this.props.loader ? (
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator size="large" />
+          </View>
+        ) : null}
+      </Fragment>
     );
   }
 }
@@ -46,3 +52,11 @@ export default connect(
   mapStateToProps,
   {loading},
 )(LoaderComponent);
+
+const styles = StyleSheet.create({
+  loaderContainer: {
+    // flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  },
+});

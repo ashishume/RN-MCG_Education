@@ -1,6 +1,7 @@
 import * as ActionTypes from '../actions/ActionTypes';
 const initialState = {
-  login: [],
+  login: {},
+  // loginStatus: false,
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         login: action.payload,
       };
+    // case ActionTypes.LOGIN_STATUS:
+    //   return {
+    //     ...state,
+    //     loginStatus: action.payload,
+    //   };
     default:
       return state;
   }

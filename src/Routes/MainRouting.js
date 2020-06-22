@@ -5,15 +5,31 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Style from '../components/Styles';
 import DrawerNavigation from './DrawerNavigation';
 import Login from '../components/screens/login';
+import SplashScreen from '../components/screens/splashScreen';
+import Swiper from '../components/screens/Swiper';
 
 const Stack = createStackNavigator();
 const MainRouting = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Splash">
+        <Stack.Screen
+          name="Splash"
+          component={SplashScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Swiper"
+          component={Swiper}
           options={{
             headerShown: false,
           }}

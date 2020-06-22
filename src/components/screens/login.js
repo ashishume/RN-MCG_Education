@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
+import React, {Component} from 'react';
 import {
   View,
   ImageBackground,
@@ -7,83 +8,79 @@ import {
   Text,
   ToastAndroid,
 } from 'react-native';
-import {AsyncStorage} from '@react-native-community/async-storage';
 
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LoginValidation from '../Utils/LoginValidation';
 import {connect} from 'react-redux';
 import {login} from '../../store/actions/auth';
-const Login = props => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState('');
-  const loginHandler = () => {
-    const body = {email, password};
+class Login extends Component {
+  state = {
+    email: '',
+    password: '',
+    errors: '',
+  };
+
+  loginHandler = () => {
+    const body = {
+      email: this.state.email,
+      password: this.state.password,
+    };
     const validate = LoginValidation(body);
     if (validate.email || validate.password) {
-      setErrors(validate);
+      this.setState({errors: validate});
       return false;
     } else {
-      setErrors('');
-      props.login(body);
+      this.props.login(body);
     }
   };
-  // const storeData = async value => {
-  //   try {
-  //     await AsyncStorage.setItem('email', value);
-  //   } catch (e) {
-  //     ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
-  //   }
-  // };
+  render() {
+    return (
+      <ImageBackground
+        source={require('../../assets/login.jpg')}
+        style={styles.backgroundImage}>
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>Welcome back</Text>
+            <Text style={styles.subHeaderText}>
+              Enter your details to signin to your account
+            </Text>
+          </View>
 
-  return (
-    <ImageBackground
-      source={require('../../assets/login.jpg')}
-      style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Welcome back</Text>
-          <Text style={styles.subHeaderText}>
-            Enter your details to signin to your account
-          </Text>
-        </View>
+          <View style={{marginBottom: 10}}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              onChangeText={email => this.setState({email})}
+              style={styles.input}
+              autoCompleteType="email"
+              keyboardType={'email-address'}
+              placeholderTextColor="#fff"
+            />
+            <Text style={styles.errorText}>{this.state.errors.email}</Text>
+          </View>
+          <View style={{marginTop: 10}}>
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              onChangeText={password => this.setState({password})}
+              style={styles.input}
+              secureTextEntry={true}
+              placeholderTextColor="#fff"
+            />
+            <Text style={styles.errorText}>{this.state.errors.password}</Text>
+          </View>
 
-        <View style={{marginBottom: 10}}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            onChangeText={email => setEmail(email)}
-            style={styles.input}
-            autoCompleteType="email"
-            keyboardType={'email-address'}
-            placeholderTextColor="#fff"
-          />
-          <Text style={styles.errorText}>{errors.email}</Text>
+          <TouchableOpacity
+            onPress={() => this.loginHandler()}
+            style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
         </View>
-        <View style={{marginTop: 10}}>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            onChangeText={password => setPassword(password)}
-            style={styles.input}
-            secureTextEntry={true}
-            placeholderTextColor="#fff"
-          />
-          <Text style={styles.errorText}>{errors.password}</Text>
-        </View>
-
-        <TouchableOpacity
-          onPress={() => loginHandler()}
-          style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
-  );
-};
+      </ImageBackground>
+    );
+  }
+}
 
 const mapStateToProps = (state, ownProps) => {
-  if (state.login.login.status) {
-    ownProps.navigation.navigate('Dashboard');
-  }
+  if (state.login.login.status) ownProps.navigation.navigate('Swiper');
   return {
     loginState: state.login.login,
   };

@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Dimensions, Image} from 'react-native';
+import {StyleSheet, View, Dimensions, Image, ToastAndroid} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Icon} from 'react-native-elements';
+import AsyncStorage from '@react-native-community/async-storage';
 const {height, width} = Dimensions.get('window');
 
 const slides = [
@@ -30,8 +31,13 @@ const renderItem = ({item}) => {
   );
 };
 
-const onDone = props => {
-  return props.introShown(true);
+const onDone = async props => {
+  try {
+    await AsyncStorage.setItem('isIntroShown', 'true');
+    props.navigation.navigate('Dashboard');
+  } catch (e) {
+    ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+  }
 };
 const renderNextButton = () => {
   return (

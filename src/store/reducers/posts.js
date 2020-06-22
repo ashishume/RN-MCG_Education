@@ -1,4 +1,4 @@
-import * as ActionTypes from '../Actions/ActionTypes';
+import * as ActionTypes from '../actions/ActionTypes';
 const initialState = {
   posts: [],
   content: [],

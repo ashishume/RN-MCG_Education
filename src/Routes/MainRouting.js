@@ -4,12 +4,21 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Style from '../components/Styles';
 import DrawerNavigation from './DrawerNavigation';
+import Login from '../components/screens/login';
 
 const Stack = createStackNavigator();
 const MainRouting = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Dashboard">
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
+
         <Stack.Screen
           component={DrawerNavigation}
           options={{
@@ -17,17 +26,6 @@ const MainRouting = () => {
           }}
           name="Dashboard"
         />
-
-        {/* <Stack.Screen
-          name="ScanDocument"
-          component={ScanDocument}
-          options={{...headerStyles}}
-        />
-        <Stack.Screen
-          name="ViewImage"
-          component={ViewImage}
-          options={{...headerStyles}}
-        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

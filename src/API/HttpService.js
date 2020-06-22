@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const http = axios.create({
-  baseURL: 'https://www.googleapis.com/blogger/v3/',
+  baseURL: 'http://192.168.1.47:5000/api/',
 });
 
 export default http;

@@ -2,11 +2,11 @@ import {applyMiddleware, compose, createStore, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 
 //REDUCERS
-// import postsReducer from './Reducers/posts';
+import loginReducer from './reducers/login';
 import loaderReducer from './reducers/loader';
 
 const rootReducer = combineReducers({
-//   posts: postsReducer,
+  login: loginReducer,
   loader: loaderReducer,
 });
 

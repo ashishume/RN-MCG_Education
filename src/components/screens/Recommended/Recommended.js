@@ -32,7 +32,7 @@ class Recommended extends Component {
                   fontWeight: '700',
                   paddingHorizontal: 20,
                 }}>
-                Recommended courses
+                Explore courses
               </Text>
               <View
                 style={{

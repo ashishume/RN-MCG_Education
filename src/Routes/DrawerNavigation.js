@@ -5,6 +5,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements';
 import Search from '../components/screens/Search';
 import Profile from '../components/screens/Profile';
+import MyCourses from '../components/screens/MyCourses/MyCourses';
+import {IconStyles} from '../components/Styles';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,18 +22,26 @@ const DrawerNavigation = () => {
             iconName = 'ios-search';
           } else if (route.name === 'Profile') {
             iconName = 'ios-person';
+          } else if (route.name === 'MyCourses') {
+            iconName = 'ios-play';
           }
           return (
-            <Icon size={size} type="ionicon" color={color} name={iconName} />
+            <Icon
+              size={IconStyles.iconSize}
+              type={IconStyles.iconType}
+              color={color}
+              name={iconName}
+            />
           );
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#6b42e5',
+        activeTintColor: IconStyles.iconColor,
         inactiveTintColor: 'gray',
       }}>
       <Tab.Screen name="Explore" component={Dashboard} />
       <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen name="MyCourses" component={MyCourses} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {Avatar, Badge, Icon, withBadge} from 'react-native-elements';
+import BadgeType from '../../Shared/Badge';
 
-// import StarRating from 'react-native-star-rating';
 class Home extends Component {
   render() {
     return (
@@ -32,15 +31,8 @@ class Home extends Component {
             justifyContent: 'space-evenly',
             paddingLeft: 10,
           }}>
-          <Badge
-            badgeStyle={{padding: 5, margin: 5, borderRadius: 4}}
-            status="primary"
-            value={
-              <Text style={{fontSize: 13, color: '#fff'}}>
-                {this.props.type}
-              </Text>
-            }
-          />
+        
+          <BadgeType name={this.props.type} />
           <Text style={{fontSize: 14, fontWeight: 'bold'}}>
             {this.props.name}
           </Text>

@@ -22,3 +22,9 @@ export default StyleSheet.create({
     shadowOffset: {width: 1, height: 13},
   },
 });
+
+export const IconStyles = {
+  iconColor: '#6b42e5',
+  iconType: 'ionicon',
+  iconSize:26
+};

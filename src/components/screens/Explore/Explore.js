@@ -44,7 +44,7 @@ class Explore extends Component {
                 fontWeight: '700',
                 paddingHorizontal: 20,
               }}>
-              Explore courses
+              Latest courses
             </Text>
 
             <View style={{height: 200, marginTop: 20}}>

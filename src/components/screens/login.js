@@ -13,6 +13,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import LoginValidation from '../Utils/LoginValidation';
 import {connect} from 'react-redux';
 import {login} from '../../store/actions/auth';
+
 class Login extends Component {
   state = {
     email: '',
@@ -20,6 +21,10 @@ class Login extends Component {
     errors: '',
   };
 
+  componentDidMount() {
+    const email = AsyncStorage.getItem('email');
+    if (email) this.props.navigation.navigate('Dashboard');
+  }
   loginHandler = () => {
     const body = {
       email: this.state.email,
@@ -30,7 +35,7 @@ class Login extends Component {
       this.setState({errors: validate});
       return false;
     } else {
-      this.props.login(body);
+      this.props.login(body, this.props);
     }
   };
   render() {

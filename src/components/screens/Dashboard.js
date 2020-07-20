@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import Explore from './Explore/Explore';
-import Recommended from './Recommended/Recommended';
+import AllCourses from './AllCourses/AllCourses';
 import Header from '../Shared/Header';
 import {View} from 'react-native';
 class Dashboard extends Component {
@@ -11,7 +11,7 @@ class Dashboard extends Component {
           {/* <Header {...this.props} /> */}
           {/* <DeviceData /> */}
           <Explore />
-          <Recommended />
+          <AllCourses />
         </View>
       </Fragment>
     );

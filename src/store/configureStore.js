@@ -4,10 +4,12 @@ import thunk from 'redux-thunk';
 //REDUCERS
 import loginReducer from './reducers/login';
 import loaderReducer from './reducers/loader';
+import courseReducer from './reducers/courses';
 
 const rootReducer = combineReducers({
   login: loginReducer,
   loader: loaderReducer,
+  courses: courseReducer,
 });
 
 const middleWares = [thunk];

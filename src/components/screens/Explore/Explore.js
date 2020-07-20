@@ -11,13 +11,17 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import Category from './Category';
+import LatestCourseItem from './LatestCourseItem';
 import dataItem from '../../../assets/data.json';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-// const {height, width} = Dimensions.get('window');
+import {connect} from 'react-redux';
+import {fetchAllCourses} from '../../../store/actions/courses';
+const {height, width} = Dimensions.get('window');
 
 class Explore extends Component {
   componentDidMount() {
+    this.props.fetchAllCourses();
+
     this.startHeaderHeight = 80;
     if (Platform.OS == 'android') {
       this.startHeaderHeight = 100 + StatusBar.currentHeight;
@@ -27,37 +31,38 @@ class Explore extends Component {
   pressHandler = value => {
     console.log(value);
   };
+  // author: "Akash Sharma"
+  // category: "SSC"
+  // content: (3) [{…}, {…}, {…}]
+  // courseDescription: "What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to"
+  // courseImage: "https://cdn.mos.cms.futurecdn.net/BVb3Wzn9orDR8mwVnhrSyd-650-80.jpg"
+  // courseTitle: "React course with hooks"
+  // courseType: "Recorded"
+  // createdAt: "2020-07-18T13:07:17.920Z"
+  // isDeleted: false
+  // otherUrl: "www.telegram.com"
+  // price: 200
+  // timeLimit: "2 weeks"
+  // __v: 0
+  // _id: "5f12f4058dc7521c9
 
   render() {
     return (
-      <SafeAreaView style={{backgroundColor: '#fff', paddingBottom: 30}}>
-        <ScrollView scrollEventThrottle={16}>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'white',
-              paddingTop: 20,
-            }}>
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: '700',
-                paddingHorizontal: 20,
-              }}>
-              Latest courses
-            </Text>
-
-            <View style={{height: 200, marginTop: 20}}>
+      <SafeAreaView style={styles.container}>
+        <ScrollView scrollEventThrottle={20}>
+          <View style={styles.insideContainer}>
+            <Text style={styles.latestCourseTitle}>Featured courses</Text>
+            <View style={styles.scrollViewContainer}>
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-                {dataItem.map((value, i) => {
+                {this.props.courses.map((value, i) => {
                   return (
                     <TouchableOpacity
                       activeOpacity={0.7}
                       key={i}
                       onPress={() => this.pressHandler(value)}>
-                      <Category imageUri={value.image} name={value.text} />
+                      <LatestCourseItem content={value} />
                     </TouchableOpacity>
                   );
                 })}
@@ -69,5 +74,26 @@ class Explore extends Component {
     );
   }
 }
-
-export default Explore;
+const styles = StyleSheet.create({
+  container: {backgroundColor: '#fff', paddingBottom: 0},
+  insideContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingTop: 10,
+  },
+  latestCourseTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    paddingHorizontal: 20,
+  },
+  scrollViewContainer: {height: 300, width: parseInt(width), marginTop: 20},
+});
+const mapStateToProps = state => {
+  return {
+    courses: state.courses.courses,
+  };
+};
+export default connect(
+  mapStateToProps,
+  {fetchAllCourses},
+)(Explore);

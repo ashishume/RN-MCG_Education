@@ -8,12 +8,12 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import Home from './Home';
-const {height, width} = Dimensions.get('window');
-
-import dataItem from '../../../assets/data.json';
-class Recommended extends Component {
+import AllCourseCard from './AllCoursesCard';
+import {fetchAllCourses} from '../../../store/actions/courses';
+import {connect} from 'react-redux';
+class AllCourses extends Component {
   componentDidMount() {
+    this.props.fetchAllCourses();
     this.startHeaderHeight = 80;
     if (Platform.OS == 'android') {
       this.startHeaderHeight = 100 + StatusBar.currentHeight;
@@ -42,17 +42,9 @@ class Recommended extends Component {
                   flexWrap: 'wrap',
                   justifyContent: 'space-between',
                 }}>
-                {dataItem.map((value, i) => {
+                {this.props.courses.map((value, i) => {
                   return (
-                    <Home
-                      key={i}
-                      width={width}
-                      name={value.text}
-                      image={value.image}
-                      type="React"
-                      price={82}
-                      rating={4}
-                    />
+                    <AllCourseCard key={i} content={value} />
                   );
                 })}
               </View>
@@ -63,5 +55,13 @@ class Recommended extends Component {
     );
   }
 }
-export default Recommended;
 
+const mapStateToProps = state => {
+  return {
+    courses: state.courses.courses,
+  };
+};
+export default connect(
+  mapStateToProps,
+  {fetchAllCourses},
+)(AllCourses);

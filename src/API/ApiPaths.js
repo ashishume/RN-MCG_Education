@@ -1,4 +1,4 @@
 export const API_NAME = {
-  LOGIN: 'students/auth/login',
+  LOGIN: 'auth/login',
   COURSES: 'courses',
 };
